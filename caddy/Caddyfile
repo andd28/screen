@@ -1,0 +1,21 @@
+{
+  email admin@fotoexpertiza.ru
+  # по желанию: acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+}
+
+api.fotoexpertiza.ru {
+  encode gzip zstd
+  reverse_proxy evidence-api:3000
+}
+
+viewer.fotoexpertiza.ru {
+  encode gzip zstd
+  root * /srv/viewer
+  file_server
+  @ws {
+    header Connection *Upgrade*
+    header Upgrade    websocket
+    path /ws/*
+  }
+  reverse_proxy @ws evidence-api:3000
+}
