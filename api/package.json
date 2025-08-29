@@ -1,0 +1,20 @@
+{
+  "name": "evidence-api",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.0.0",
+    "@fastify/static": "^7.0.2",
+    "fastify": "^4.28.1",
+    "fastify-websocket": "^6.0.1",
+    "nanoid": "^5.0.7",
+    "puppeteer": "^22.13.1",
+    "puppeteer-stream": "^3.0.0",
+    "sha256-file": "^1.0.0"
+  }
+}
