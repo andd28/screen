@@ -40,15 +40,21 @@ RUN apt-get update && apt-get install -y \
   --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
-COPY package.json ./
-RUN npm ci --omit=dev
 
+# важно — отключаем скачивание Chromium до npm install
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+ENV NODE_ENV=production
+ENV PORT=3000
+
+# Копируем только package.json (кэшируется) и ставим production-зависимости
+COPY package.json ./
+RUN npm install --production --no-audit --no-fund
+
+# затем копируем код
 COPY . .
+
 RUN mkdir -p storage && chown -R node:node /usr/src/app
 USER node
 
-ENV PUPPETEER_SKIP_DOWNLOAD=true
-ENV PORT=3000
 EXPOSE 3000
-
 CMD ["node", "server.js"]
