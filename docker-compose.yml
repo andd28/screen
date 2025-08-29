@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  api:
+    build: ./api
+    container_name: evidence-api
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - PUBLIC_VIEWER_ORIGIN=https://viewer.fotoexpertiza.ru
+      - PUBLIC_API_ORIGIN=https://api.fotoexpertiza.ru
+      - PUPPETEER_HEADLESS=true
+      - MAX_SESSION_MINUTES=30
+      - RECORDING_FPS=25
+    ports:
+      - "3000:3000"
+    shm_size: "1gb" # важно для стабильности Chromium
+    volumes:
+      - ./storage:/usr/src/app/storage
+
+  caddy:
+    image: caddy:2.8
+    container_name: evidence-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+      - ./api/public:/srv/viewer:ro
