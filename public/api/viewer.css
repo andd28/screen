@@ -1,6 +1,0 @@
-html,body { height:100%; margin:0; background:#0b0f14; }
-.toolbar { position:fixed; top:10px; left:50%; transform:translateX(-50%);
-  background:#111a22; padding:8px 12px; border-radius:14px; display:flex; gap:8px; z-index:10; }
-.toolbar button { border:none; padding:8px 10px; border-radius:10px; cursor:pointer; }
-.stage { display:flex; align-items:center; justify-content:center; height:100%; }
-#frame { max-width:100%; max-height:100%; image-rendering:auto; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,.5); }
